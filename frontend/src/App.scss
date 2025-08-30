@@ -1,0 +1,110 @@
+/* Body and background */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+}
+
+.debug {
+  outline: 1px solid #f4f;
+}   
+
+.masonry-wrapper {
+  display: flex;
+  gap: 24px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.masonry-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transition: all 0.3s ease;
+}
+
+/* --- Responsive column visibility --- */
+
+/* Default: show all 3 columns */
+
+@media (max-width: 991px) {
+  .masonry-column:nth-child(3) {
+    display: none;
+  }
+}
+
+@media (max-width: 575px) {
+  .masonry-column:nth-child(2),
+  .masonry-column:nth-child(3) {
+    display: none;
+  }
+}
+
+.masonry-item.highlighted {
+  outline: 3px solid rgba(0, 123, 255, 0.8);
+  outline-offset: -3px;
+}
+
+.masonry-item img {
+  width: 100%;
+  display: block;
+  filter: grayscale(100%) blur(0px) brightness(1);
+  transition: filter 1s ease-in-out, transform 0.3s ease;
+  //border-radius: 12px;
+}
+
+
+@media (hover: hover) and (pointer: fine) {
+  .masonry-item img:hover {
+    filter: grayscale(0%);
+    transform: scale(1.01);
+  }
+}
+
+/* Default blurred style */
+.masonry-item.blurred img {
+  filter: grayscale(100%) blur(3px) brightness(0.7);
+}
+
+.masonry-item.in-the-middle:not(.blurred) img {
+  filter: grayscale(0%) blur(0px) brightness(1);
+}
+
+.lazy-fullscreen-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  touch-action: none; /* disables scroll gestures on the overlay */
+}
+
+.lazy-fullscreen-img {
+  position: absolute;
+  max-width: 99%;
+  max-height: 97%;
+  object-fit: contain;
+  transition: opacity 0.2s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+  //border-radius: 15px;
+}
+
+.lazy-fullscreen-img.low-res {
+  z-index: 1;
+  position: absolute;
+  height: 100%;
+}
+
+.lazy-fullscreen-img.high-res {
+  opacity: 0;
+  z-index: 2;
+}
+
+.lazy-fullscreen-img.high-res.loaded {
+  opacity: 1;
+}

@@ -1,3 +1,10 @@
+.idea/*
+.idea
+backend/images
+backend/.idea/*
+frontend/.idea/*
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
