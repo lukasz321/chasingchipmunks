@@ -1,15 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
+import { BASE_URL } from "./App";
 
 const LazyImageFullscreen = ({
-  thumb,
-  full,
+  photoIdx,
   alt = "",
   onClose,
   onNext,
   onPrev,
 }: {
-  thumb: string;
-  full: string;
+  photoIdx: number;
   alt?: string;
   onClose: () => void;
   onNext: () => void;
@@ -50,6 +49,7 @@ const LazyImageFullscreen = ({
     startX.current = null;
   };
 
+  const paddedIdx = String(photoIdx).padStart(3, "0");
   return (
     <div
       className="lazy-fullscreen-overlay"
@@ -57,9 +57,13 @@ const LazyImageFullscreen = ({
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      <img src={thumb} alt={alt} className="lazy-fullscreen-img low-res" />
       <img
-        src={full}
+        src={`${BASE_URL}/thumbs/${paddedIdx}.png`}
+        alt={alt}
+        className="lazy-fullscreen-img low-res"
+      />
+      <img
+        src={`${BASE_URL}/full/${paddedIdx}.png`}
         alt={alt}
         className={`lazy-fullscreen-img high-res ${loaded ? "loaded" : ""}`}
         onLoad={() => setLoaded(true)}

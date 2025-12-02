@@ -1,21 +1,13 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
-import { useQuery } from "@tanstack/react-query";
-import { fetchPhotos } from "./api";
 import { useWindowSize } from "usehooks-ts";
-import LazyImage from "./LazyImage";
 import LazyImageFullscreen from "./LazyImageFullscreen";
-import { Spinner } from "react-bootstrap";
 import { useCenteredImage } from "./useCenteredImage";
 
-interface Photo {
-  src: string; // full resolution
-  thumb: string; // thumbnail
-  index?: number;
-}
-
-const numPhotos = 48
+export const BASE_URL =
+  "https://cdn.jsdelivr.net/gh/lukasz321/chasingchipmunks@trunk/photos/";
+const NUM_PHOTOS = 48;
 
 const App = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -27,47 +19,59 @@ const App = () => {
 
   const inTheMiddle = useCenteredImage(inTheMiddleSelector, numCols > 1);
 
+  useEffect(() => {
+    setTimeout(() => setInTheMiddleSelector(".masonry-item"), 300);
+  }, []);
+
   return (
     <div className="pb-5" style={{ width: "100vw" }}>
       <div className="masonry-wrapper">
-        {Array.from({length: 3}).map((column, colIdx) => (
+        {Array.from({ length: numCols }).map((_, colIdx) => (
           <div className="masonry-column" key={colIdx}>
-            {Array.from({length: numPhotos/3}).map((photo, photoIdx) => (
-              <div
-                id={`${colIdx}-${photoIdx}`}
-                key={`${colIdx}-${photoIdx}`}
-                className={`masonry-item ${activeIndex !== null ? "blurred" : ""} ${inTheMiddle === photo.src ? "in-the-middle" : ""}`}
-                onClick={() => numCols > 1 && setActiveIndex((colIdx+1)*(photoIdx+1))}
-                style={{ cursor: numCols > 1 ? "pointer" : "default" }}
-              >
-                <img
-                  src={`https://cdn.jsdelivr.net/gh/lukasz321/chasingchipmunks@trunk/photos/thumbs/0${(photoIdx+1)*(colIdx+1)}.png`}
-                  className={`thumb ${true ? "loaded" : ""}`}
-                  loading="lazy"
-                />
-              </div>
-            ))}
+            {Array.from({ length: Math.ceil(NUM_PHOTOS / numCols) }).map(
+              (_, photoIdx) => {
+                const rawIdx = NUM_PHOTOS - 1 - (photoIdx * numCols + colIdx);
+                if (rawIdx < 0) return null;
+                const paddedIdx = String(rawIdx + 1).padStart(3, "0");
+
+                return (
+                  <div
+                    id={paddedIdx}
+                    key={paddedIdx}
+                    className={`masonry-item ${activeIndex !== null ? "blurred" : ""} ${
+                      inTheMiddle === paddedIdx ? "in-the-middle" : ""
+                    }`}
+                    onClick={() => numCols > 1 && setActiveIndex(rawIdx + 1)}
+                    style={{ cursor: numCols > 1 ? "pointer" : "default" }}
+                  >
+                    <img
+                      style={{ minHeight: "200px" }}
+                      className="thumb loaded"
+                      id={paddedIdx}
+                      key={paddedIdx}
+                      src={`${BASE_URL}/thumbs/${paddedIdx}.png`}
+                      loading="lazy"
+                    />
+                  </div>
+                );
+              },
+            )}
           </div>
         ))}
       </div>
 
       {/* Fullscreen viewer */}
-      {/* {activeIndex !== null && numCols > 1 && (
+      {activeIndex !== null && numCols > 1 && (
         <LazyImageFullscreen
-          thumb={flatPhotos[activeIndex].thumb}
-          full={flatPhotos[activeIndex].src}
+          photoIdx={activeIndex}
           alt={`Gallery ${activeIndex}`}
           onClose={() => setActiveIndex(null)}
-          onNext={() =>
-            setActiveIndex((prev) => (prev! + 1) % flatPhotos.length)
-          }
+          onNext={() => setActiveIndex((prev) => (prev! + 1) % NUM_PHOTOS)}
           onPrev={() =>
-            setActiveIndex((prev) =>
-              prev! === 0 ? flatPhotos.length - 1 : prev! - 1,
-            )
+            setActiveIndex((prev) => (prev! === 0 ? NUM_PHOTOS - 1 : prev! - 1))
           }
         />
-      )} */}
+      )}
     </div>
   );
 };

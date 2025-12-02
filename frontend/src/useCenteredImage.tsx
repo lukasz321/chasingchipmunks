@@ -43,7 +43,7 @@ export const useCenteredImage = (selector: string, disabled: boolean) => {
       window.removeEventListener("scroll", updateActiveIndex);
       window.removeEventListener("resize", updateActiveIndex);
     };
-  }, [selector, disabled]);
+  }, [selector, disabled, activeSrc]);
 
   return activeSrc;
 };
