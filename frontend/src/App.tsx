@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 import { useWindowSize } from "usehooks-ts";
 import LazyImageFullscreen from "./LazyImageFullscreen";
-import { useCenteredImage } from "./useCenteredImage";
+import { useCenteredImage } from "./hooks/useCenteredImage";
 
 export const BASE_URL =
   "https://cdn.jsdelivr.net/gh/lukasz321/chasingchipmunks@trunk/photos/";
