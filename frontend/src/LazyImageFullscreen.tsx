@@ -49,7 +49,7 @@ const LazyImageFullscreen = ({
     startX.current = null;
   };
 
-  const paddedIdx = String(photoIdx).padStart(3, "0");
+  const paddedIdx = String(photoIdx + 1).padStart(3, "0");
   return (
     <div
       className="lazy-fullscreen-overlay"
@@ -58,15 +58,19 @@ const LazyImageFullscreen = ({
       onTouchEnd={onTouchEnd}
     >
       <img
+        key={`fullscreen-thumb-${paddedIdx}`}
         src={`${BASE_URL}/thumbs/${paddedIdx}.png`}
         alt={alt}
         className="lazy-fullscreen-img low-res"
+        loading="eager"
       />
       <img
-        src={`${BASE_URL}/full/${paddedIdx}.png`}
+        key={`fullscreen-full-${paddedIdx}`}
+        src={`${BASE_URL}/full/${paddedIdx}.jpg`}
         alt={alt}
         className={`lazy-fullscreen-img high-res ${loaded ? "loaded" : ""}`}
         onLoad={() => setLoaded(true)}
+        loading="lazy"
       />
     </div>
   );

@@ -41,7 +41,7 @@ const App = () => {
                     className={`masonry-item ${activeIndex !== null ? "blurred" : ""} ${
                       inTheMiddle === paddedIdx ? "in-the-middle" : ""
                     }`}
-                    onClick={() => numCols > 1 && setActiveIndex(rawIdx + 1)}
+                    onClick={() => numCols > 1 && setActiveIndex(rawIdx)}
                     style={{ cursor: numCols > 1 ? "pointer" : "default" }}
                   >
                     <img
