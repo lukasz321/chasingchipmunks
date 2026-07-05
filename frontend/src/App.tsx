@@ -7,7 +7,7 @@ import { useCenteredImage } from "./hooks/useCenteredImage";
 
 export const BASE_URL =
   "https://cdn.jsdelivr.net/gh/lukasz321/chasingchipmunks@trunk/photos/";
-const NUM_PHOTOS = 48;
+const NUM_PHOTOS = 60;
 
 const App = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
