@@ -6,7 +6,7 @@ import LazyImageFullscreen from "./LazyImageFullscreen";
 import { useCenteredImage } from "./hooks/useCenteredImage";
 
 export const BASE_URL =
-  "https://cdn.jsdelivr.net/gh/lukasz321/chasingchipmunks@trunk/photos/";
+  "https://cdn.jsdelivr.net/gh/lukasz321/chasingchipmunks@v1/photos/";
 const NUM_PHOTOS = 60;
 
 const App = () => {
