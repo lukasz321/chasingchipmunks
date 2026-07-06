@@ -28,6 +28,42 @@ const App = () => {
       <div className="masonry-wrapper">
         {Array.from({ length: numCols }).map((_, colIdx) => (
           <div className="masonry-column" key={colIdx}>
+            {colIdx === 0 && (
+              <div style={{ margin: "50px auto" }}>
+                <a
+                  href="https://www.youtube.com/watch?v=pdzm3tMKQBI"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.opacity = "0.9";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.opacity = "1";
+                  }}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "8px",
+                    padding: "12px 18px",
+                    backgroundColor: "#ff0000",
+                    color: "white",
+                    textDecoration: "none",
+                    textAlign: "center",
+                    borderRadius: "8px",
+                    transition: "opacity 0.2s ease",
+                  }}
+                >
+                  <span style={{ fontSize: "30px", fontWeight: 600 }}>
+                    ▶︎ YouTube
+                  </span>
+                  <span style={{ fontSize: "13px", fontWeight: 300 }}>
+                    Golden State Roam{" "}
+                    <span style={{ fontWeight: 500 }}>2025</span>
+                  </span>
+                </a>
+              </div>
+            )}
             {Array.from({ length: Math.ceil(NUM_PHOTOS / numCols) }).map(
               (_, photoIdx) => {
                 const rawIdx = NUM_PHOTOS - 1 - (photoIdx * numCols + colIdx);
