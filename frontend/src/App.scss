@@ -5,9 +5,10 @@ body, html, #root {
   background-color: #000;
 }
 
+/* Keep: handy debug helper toggled in manually while developing. Do not delete. */
 .debug {
   outline: 1px solid #f4f;
-}   
+}
 
 .masonry-wrapper {
   display: flex;
@@ -40,11 +41,6 @@ body, html, #root {
   .masonry-column:nth-child(3) {
     display: none;
   }
-}
-
-.masonry-item.highlighted {
-  outline: 3px solid rgba(0, 123, 255, 0.8);
-  outline-offset: -3px;
 }
 
 .masonry-item img {

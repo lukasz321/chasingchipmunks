@@ -30,9 +30,7 @@ export const useCenteredImage = (selector: string, disabled: boolean) => {
         }
       });
 
-      if (closestSrc !== activeSrc) {
-        setActiveSrc(closestSrc);
-      }
+      setActiveSrc((prev) => (prev !== closestSrc ? closestSrc : prev));
     };
 
     updateActiveIndex();
@@ -43,7 +41,7 @@ export const useCenteredImage = (selector: string, disabled: boolean) => {
       window.removeEventListener("scroll", updateActiveIndex);
       window.removeEventListener("resize", updateActiveIndex);
     };
-  }, [selector, disabled, activeSrc]);
+  }, [selector, disabled]);
 
   return activeSrc;
 };

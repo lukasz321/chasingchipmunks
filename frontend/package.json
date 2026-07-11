@@ -13,13 +13,9 @@
     "deploy": "wrangler pages deploy ./dist --project-name chasingchipmunks"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.90.2",
-    "bootstrap": "^5.3.8",
     "react": "^19.1.1",
-    "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.1",
-    "usehooks-ts": "^3.1.1",
-    "yet-another-react-lightbox": "^3.25.0"
+    "usehooks-ts": "^3.1.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
