@@ -95,14 +95,14 @@ const LazyImageFullscreen = ({
       )}
       <img
         key={`fullscreen-thumb-${paddedIdx}`}
-        src={`${BASE_URL}/thumbs/${paddedIdx}.png`}
+        src={`${BASE_URL}/thumbs/${paddedIdx}.webp`}
         alt={alt}
         className="lazy-fullscreen-img low-res"
         loading="eager"
       />
       <img
         key={`fullscreen-full-${paddedIdx}`}
-        src={`${BASE_URL}/full/${paddedIdx}.jpg`}
+        src={`${BASE_URL}/full/${paddedIdx}.avif`}
         alt={alt}
         className={`lazy-fullscreen-img high-res ${loaded ? "loaded" : ""}`}
         onLoad={() => setLoaded(true)}

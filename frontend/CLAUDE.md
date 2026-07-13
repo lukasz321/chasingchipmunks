@@ -9,8 +9,8 @@ fullscreen swipeable/keyboard-navigable lightbox. Built with React 19 + TypeScri
 site to Cloudflare Pages.
 
 This `frontend/` directory is a subfolder of a larger repo whose root is one level up (`../`). The sibling
-`../photos/` directory holds the original HEIC photos plus a conversion script and the generated `full/` (JPEG)
-and `thumbs/` (PNG) images that the app actually loads at runtime — see "Photo pipeline" below.
+`../photos/` directory holds the original HEIC photos plus a conversion script and the generated `full/` (AVIF)
+and `thumbs/` (WebP) images that the app actually loads at runtime — see "Photo pipeline" below.
 
 ## Commands
 
@@ -60,14 +60,14 @@ Images are **not** bundled with the app — they're fetched at runtime from jsde
 repo:
 
 ```
-BASE_URL = https://cdn.jsdelivr.net/gh/lukasz321/chasingchipmunks@v1/photos/
+BASE_URL = https://cdn.jsdelivr.net/gh/lukasz321/chasingchipmunks@v2/photos/
 ```
 
-- Thumbnails: `${BASE_URL}/thumbs/{001..NNN}.png`
-- Full-res: `${BASE_URL}/full/{001..NNN}.jpg`
+- Thumbnails: `${BASE_URL}/thumbs/{001..NNN}.webp`
+- Full-res: `${BASE_URL}/full/{001..NNN}.avif`
 
-Source images live in `../photos/` (originals as `.HEIC`/`.heic`, converted via `../photos/convert_heic_to_png.sh`
-using ImageMagick into numbered `full/*.jpg` (max 4000px, q90) and `thumbs/*.png` (max 600px, q75)).
+Source images live in `../photos/` (originals as `.HEIC`/`.heic`, converted via `../photos/convert_heic.sh`
+using ImageMagick into numbered `full/*.avif` (max 4000px, q95) and `thumbs/*.webp` (max 600px, q80)).
 
 **To add new photos:** drop HEICs into `../photos/`, run the conversion script, commit `full/` and `thumbs/`,
 move/create the `vN` git tag jsdelivr resolves against, and bump `NUM_PHOTOS` in `App.tsx` to match. Because

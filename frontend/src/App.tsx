@@ -5,7 +5,7 @@ import LazyImageFullscreen from "./LazyImageFullscreen";
 import { useCenteredImage } from "./hooks/useCenteredImage";
 
 export const BASE_URL =
-  "https://cdn.jsdelivr.net/gh/lukasz321/chasingchipmunks@v1/photos/";
+  "https://cdn.jsdelivr.net/gh/lukasz321/chasingchipmunks@v2/photos/";
 const NUM_PHOTOS = 60;
 
 const heroLinkStyle = {
@@ -139,7 +139,7 @@ const App = () => {
                       style={{ minHeight: "200px" }}
                       className="thumb loaded"
                       alt={`Photo ${paddedIdx}`}
-                      src={`${BASE_URL}/thumbs/${paddedIdx}.png`}
+                      src={`${BASE_URL}/thumbs/${paddedIdx}.webp`}
                       loading="lazy"
                     />
                   </div>
