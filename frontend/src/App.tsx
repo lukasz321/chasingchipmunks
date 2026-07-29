@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import "./App.scss";
 import { useWindowSize } from "usehooks-ts";
 import LazyImageFullscreen from "./LazyImageFullscreen";
@@ -7,6 +7,41 @@ import { useCenteredImage } from "./hooks/useCenteredImage";
 export const BASE_URL =
   "https://cdn.jsdelivr.net/gh/lukasz321/chasingchipmunks@v2/photos/";
 const NUM_PHOTOS = 60;
+
+// How many thumbnails are allowed to be in-flight ahead of the last one that
+// has finished. Small enough that photos load roughly top-to-bottom (so their
+// height shifts push down not-yet-visible content instead of jumping the
+// visible ones), large enough to keep the pipe busy on fast connections.
+const LOAD_AHEAD = 4;
+
+// A single grayscale thumbnail that fades in once it has loaded. `shouldLoad`
+// gates when its request is actually kicked off so the grid loads in order.
+const Thumb = ({
+  src,
+  alt,
+  shouldLoad,
+  onSettled,
+}: {
+  src: string;
+  alt: string;
+  shouldLoad: boolean;
+  onSettled: () => void;
+}) => {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <img
+      style={{ minHeight: "200px" }}
+      className={`thumb ${loaded ? "loaded" : ""}`}
+      alt={alt}
+      src={shouldLoad ? src : undefined}
+      onLoad={() => {
+        setLoaded(true);
+        onSettled();
+      }}
+      onError={onSettled}
+    />
+  );
+};
 
 const heroLinkStyle = {
   display: "flex",
@@ -29,6 +64,23 @@ const App = () => {
 
   const { width } = useWindowSize();
   const numCols = width > 991 ? 3 : width > 575 ? 2 : 1;
+
+  // Load thumbnails strictly in visual reading order (top-to-bottom). A photo's
+  // reading position is `NUM_PHOTOS - 1 - rawIdx`, independent of column count.
+  // `loadedCount` is the length of the uninterrupted run of positions that have
+  // finished loading; a thumbnail only starts loading once its position is
+  // within LOAD_AHEAD of that run. Both are monotonic, so once a thumbnail is
+  // allowed to load it stays loaded across resizes.
+  const [loadedCount, setLoadedCount] = useState(0);
+  const loadedPositions = useRef<Set<number>>(new Set());
+  const markLoaded = (pos: number) => {
+    loadedPositions.current.add(pos);
+    setLoadedCount((count) => {
+      let next = count;
+      while (loadedPositions.current.has(next)) next++;
+      return next;
+    });
+  };
 
   // Photo indices in the exact order they are laid out on the page (down each
   // column, then the next column). Fullscreen navigation steps through this so
@@ -125,6 +177,9 @@ const App = () => {
                 if (rawIdx < 0) return null;
                 const paddedIdx = String(rawIdx + 1).padStart(3, "0");
 
+                // Visual reading position (top-to-bottom, left-to-right).
+                const loadPos = NUM_PHOTOS - 1 - rawIdx;
+
                 return (
                   <div
                     id={paddedIdx}
@@ -135,12 +190,11 @@ const App = () => {
                     onClick={() => numCols > 1 && setActiveIndex(rawIdx)}
                     style={{ cursor: numCols > 1 ? "pointer" : "default" }}
                   >
-                    <img
-                      style={{ minHeight: "200px" }}
-                      className="thumb loaded"
+                    <Thumb
                       alt={`Photo ${paddedIdx}`}
                       src={`${BASE_URL}/thumbs/${paddedIdx}.webp`}
-                      loading="lazy"
+                      shouldLoad={loadPos < loadedCount + LOAD_AHEAD}
+                      onSettled={() => markLoaded(loadPos)}
                     />
                   </div>
                 );

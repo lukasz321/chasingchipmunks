@@ -46,9 +46,16 @@ body, html, #root {
 .masonry-item img {
   width: 100%;
   display: block;
+  opacity: 0;
   filter: grayscale(100%) blur(0px) brightness(1);
-  transition: filter 1s ease-in-out, transform 0.3s ease;
+  transition: filter 1s ease-in-out, transform 0.3s ease,
+    opacity 0.8s ease-in-out;
   //border-radius: 12px;
+}
+
+/* Fade the thumbnail in once it has finished loading. */
+.masonry-item img.loaded {
+  opacity: 1;
 }
 
 
