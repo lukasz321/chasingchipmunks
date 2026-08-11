@@ -45,15 +45,15 @@ const Thumb = ({
 
 const heroLinkStyle = {
   display: "flex",
-  flexDirection: "column",
+  flexDirection: "row",
   alignItems: "center",
   justifyContent: "center",
   gap: "8px",
-  padding: "12px 18px",
+  padding: "8px 14px",
   color: "white",
   textDecoration: "none",
   textAlign: "center",
-  borderRadius: "8px",
+  borderRadius: "6px",
   transition: "opacity 0.2s ease",
 } as const;
 
@@ -121,53 +121,77 @@ const App = () => {
                 style={{
                   margin: "50px auto",
                   display: "flex",
-                  flexWrap: "wrap",
-                  justifyContent: "center",
+                  flexDirection: "column",
+                  alignItems: "center",
                   gap: "16px",
                 }}
               >
-                <a
-                  href="https://www.youtube.com/watch?v=pdzm3tMKQBI"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.opacity = "0.9";
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "10px",
                   }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.opacity = "1";
-                  }}
-                  style={{ ...heroLinkStyle, backgroundColor: "#ff0000" }}
                 >
-                  <span style={{ fontSize: "30px", fontWeight: 600 }}>
-                    ▶︎ YouTube
-                  </span>
-                  <span style={{ fontSize: "13px", fontWeight: 300 }}>
-                    Golden State Roam{" "}
-                    <span style={{ fontWeight: 500 }}>2025</span>
-                  </span>
-                </a>
+                  <a
+                    href="https://www.youtube.com/watch?v=pdzm3tMKQBI"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = "0.9";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = "1";
+                    }}
+                    style={{ ...heroLinkStyle, backgroundColor: "#ff0000" }}
+                  >
+                    <span style={{ fontSize: "16px", lineHeight: 1 }}>▶︎</span>
+                    <span style={{ fontSize: "14px", fontWeight: 600 }}>
+                      Golden State Roam{" "}
+                      <span style={{ fontWeight: 400 }}>2025</span>
+                    </span>
+                  </a>
+                  <a
+                    href="https://www.youtube.com/watch?v=Uu0us3beW-Q"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = "0.9";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = "1";
+                    }}
+                    style={{ ...heroLinkStyle, backgroundColor: "#ff0000" }}
+                  >
+                    <span style={{ fontSize: "16px", lineHeight: 1 }}>▶︎</span>
+                    <span style={{ fontSize: "14px", fontWeight: 600 }}>
+                      High Sierra Trail{" "}
+                      <span style={{ fontWeight: 400 }}>2026</span>
+                    </span>
+                  </a>
+                </div>
                 <a
                   href="https://powchase.chasingchipmunks.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.opacity = "0.9";
+                    e.currentTarget.style.opacity = "0.7";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.opacity = "1";
                   }}
-                  style={{ ...heroLinkStyle, backgroundColor: "#1565c0" }}
+                  style={{
+                    color: "#1565c0",
+                    textDecoration: "none",
+                    fontSize: "15px",
+                    fontWeight: 600,
+                    fontFamily:
+                      "'SF Mono', 'Fira Code', Menlo, Consolas, monospace",
+                    transition: "opacity 0.2s ease",
+                  }}
                 >
-                  <span
-                    style={{
-                      fontSize: "26px",
-                      fontWeight: 600,
-                      fontFamily:
-                        "'SF Mono', 'Fira Code', Menlo, Consolas, monospace",
-                    }}
-                  >
-                    powchase
-                  </span>
+                  powchase →
                 </a>
               </div>
             )}
