@@ -172,7 +172,7 @@ const App = () => {
                   </a>
                 </div>
                 <a
-                  href="https://powchase.chasingchipmunks.com"
+                  href="https://chasingpowder.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={(e) => {
